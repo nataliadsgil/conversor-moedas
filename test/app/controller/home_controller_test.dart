@@ -25,7 +25,6 @@ main() {
       real: 5.65,
       dolar: 1.0,
       euro: 0.85,
-      bitcoin: 0.000088,
     );
 
     homeController.toCurrency = CurrencyModel(
@@ -33,7 +32,6 @@ main() {
       real: 1.0,
       dolar: 0.18,
       euro: 0.15,
-      bitcoin: 0.000016,
     );
     homeController.convert();
     expect(to.text, '5.65');

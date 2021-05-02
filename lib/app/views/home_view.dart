@@ -22,6 +22,72 @@ class _HomeViewState extends State<HomeView> {
       toValue: toValue,
       fromValue: fromValue,
     );
+    homeController.start();
+  }
+
+  _start() {
+    return Container();
+  }
+
+  _loading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _success() {
+    return Column(
+      children: [
+        CurrencyBox(
+          selectedItem: homeController.fromCurrency,
+          items: homeController.currencies,
+          controller: fromValue,
+          onChanged: (model) {
+            setState(() {
+              homeController.fromCurrency = model;
+            });
+          },
+        ),
+        SizedBox(height: 10),
+        CurrencyBox(
+          selectedItem: homeController.toCurrency,
+          items: homeController.currencies,
+          controller: toValue,
+          onChanged: (model) {
+            setState(() {
+              homeController.toCurrency = model;
+            });
+          },
+        ),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            homeController.convert();
+          },
+          child: Text('Converter'),
+        )
+      ],
+    );
+  }
+
+  _error() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {},
+        child: Text('Tentar Novamente'),
+      ),
+    );
+  }
+
+  stateManagment(HomeState state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.success:
+        return _success();
+      case HomeState.error:
+        return _error();
+    }
   }
 
   @override
@@ -40,33 +106,11 @@ class _HomeViewState extends State<HomeView> {
                 height: 120,
                 child: Image.asset('assets/images/logo.png'),
               ),
-              CurrencyBox(
-                selectedItem: homeController.fromCurrency,
-                items: homeController.currencies,
-                controller: fromValue,
-                onChanged: (model) {
-                  setState(() {
-                    homeController.fromCurrency = model;
-                  });
+              AnimatedBuilder(
+                animation: homeController.state,
+                builder: (context, child) {
+                  return stateManagment(homeController.state.value);
                 },
-              ),
-              SizedBox(height: 10),
-              CurrencyBox(
-                selectedItem: homeController.toCurrency,
-                items: homeController.currencies,
-                controller: toValue,
-                onChanged: (model) {
-                  setState(() {
-                    homeController.toCurrency = model;
-                  });
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  homeController.convert();
-                },
-                child: Text('Converter'),
               )
             ],
           ),
