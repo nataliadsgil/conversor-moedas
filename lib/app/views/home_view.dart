@@ -40,9 +40,16 @@ class _HomeViewState extends State<HomeView> {
           selectedItem: homeController.fromCurrency,
           items: homeController.currencies,
           controller: fromValue,
-          onChanged: (model) {
+          onPressed: () {
+            var index =
+                homeController.currencies.indexOf(homeController.fromCurrency);
+            if (index < homeController.currencies.length - 1) {
+              index++;
+            } else {
+              index = 0;
+            }
             setState(() {
-              homeController.fromCurrency = model;
+              homeController.fromCurrency = homeController.currencies[index];
             });
           },
         ),
@@ -51,9 +58,16 @@ class _HomeViewState extends State<HomeView> {
           selectedItem: homeController.toCurrency,
           items: homeController.currencies,
           controller: toValue,
-          onChanged: (model) {
+          onPressed: () {
+            var index =
+                homeController.currencies.indexOf(homeController.toCurrency);
+            if (index < homeController.currencies.length - 1) {
+              index++;
+            } else {
+              index = 0;
+            }
             setState(() {
-              homeController.toCurrency = model;
+              homeController.toCurrency = homeController.currencies[index];
             });
           },
         ),
