@@ -1,6 +1,20 @@
+import 'package:conversor_moedas/app/models/currency_model.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyBox extends StatelessWidget {
+  final List<CurrencyModel> items;
+  final CurrencyModel selectedItem;
+  final TextEditingController controller;
+  final void Function(CurrencyModel model) onChanged;
+
+  const CurrencyBox({
+    Key key,
+    this.items,
+    this.controller,
+    this.onChanged,
+    this.selectedItem,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -9,18 +23,22 @@ class CurrencyBox extends StatelessWidget {
           flex: 1,
           child: SizedBox(
             height: 65,
-            child: DropdownButton(
+            child: DropdownButton<CurrencyModel>(
               isExpanded: true,
+              value: selectedItem,
               underline: Container(
                 height: 1,
                 color: Colors.blueGrey,
               ),
-              items: [
-                DropdownMenuItem(child: Text('Real')),
-                DropdownMenuItem(child: Text('Dólar')),
-                DropdownMenuItem(child: Text('Euro')),
-              ],
-              onChanged: (value) {},
+              items: items
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.name),
+                    ),
+                  )
+                  .toList(),
+              onChanged: onChanged,
             ),
           ),
         ),
@@ -28,6 +46,7 @@ class CurrencyBox extends StatelessWidget {
         Expanded(
           flex: 2,
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.blueGrey),
