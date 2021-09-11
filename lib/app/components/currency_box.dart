@@ -20,18 +20,31 @@ class CurrencyBox extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: ElevatedButton(
-              onPressed: onPressed, child: Text(selectedItem.name)),
+          child: Container(
+            height: 60,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xff222222)),
+                ),
+                onPressed: onPressed,
+                child: Text(selectedItem.name)),
+          ),
         ),
         SizedBox(width: 10),
         Expanded(
           flex: 2,
           child: TextField(
+            style: TextStyle(
+              height: 0.8,
+              fontSize: 20,
+            ),
             keyboardType: TextInputType.number,
             controller: controller,
             decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.amber),
               ),
             ),
           ),

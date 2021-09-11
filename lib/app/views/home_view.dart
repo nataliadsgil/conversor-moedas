@@ -72,11 +72,22 @@ class _HomeViewState extends State<HomeView> {
           },
         ),
         SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            homeController.convert();
-          },
-          child: Text('Converter'),
+        Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width / 1.5,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            ),
+            onPressed: () {
+              homeController.convert();
+            },
+            child: Text(
+              'Converter',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         )
       ],
     );
@@ -111,7 +122,7 @@ class _HomeViewState extends State<HomeView> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -119,6 +130,9 @@ class _HomeViewState extends State<HomeView> {
                 width: 120,
                 height: 120,
                 child: Image.asset('assets/images/logo.png'),
+              ),
+              SizedBox(
+                height: 50,
               ),
               AnimatedBuilder(
                 animation: homeController.state,
